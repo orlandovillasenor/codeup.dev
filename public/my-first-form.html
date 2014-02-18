@@ -4,19 +4,43 @@
 		<title>My first HTML form</title>
 	</head>
 	<body>
-		<form method="POST" action="http://requestb.in/pocpe0po">
+		<h2>User Login</h2>
+		<form method="POST" action="http://requestb.in/1h98bp71">
 		    <p>
 		        <label for="username">Username:</label>
 		        <input id="username" name="username" placeholder="Enter here" type="text">
 		    </p>
 		    <p>
 		        <label for="password">Password:</label>
-		        <input id="password" name="password" placeholder="min. 6 characters" type="password">
+		        <input id="password" name="password" placeholder="min 6 characters" type="password">
 		    </p>
 		    <p>
 		        <!-- <input name="submit" type="submit" value="Login"> -->
 		        <button type="submit">Login</button>
 		    </p>
 		</form>
+		<h2>Compose an Email</h2>
+		<form method="POST" action="http://requestb.in/1h98bp71">
+			<p>
+				<label for="to">To:</label>
+				<input id="to" name="to" type="text">
+			</p>
+			<p>
+				<label for="from">From:</label>
+				<input id="from" name="from" type="text">
+			</p>
+			<p>
+				<label for="subject">Subject:</label>
+				<input id="subject" name="subject" type="text">
+			</p>
+			<p>
+				<label for="body">Email:</label>
+				<textarea name="body" id="body" cols="30" rows="10"></textarea>
+			</p>
+			<p>
+				<input name="send" type="submit" value="Send">
+			</p>
+		</form>
+
 	</body>
 </html>
