@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<script>
+		var username = prompt('What is your name?');
+//       Keep asking if an empty input is provided.
+		while (username == '' || username == null){
+			username = prompt('What is your name?');
+		}
+		
+		alert('Welcome ' + username);
+		var confirmed = confirm('Hit OK if you like pizza. Cancel if you do not like pizza. ');
+		
+		if (confirmed) {
+			alert('Me too. Pizza is good!');
+		} else {
+			alert('You should like pizza.')
+		}
+	
+	</script>
+</body>
+</html>
