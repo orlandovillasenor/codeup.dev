@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	
+	<title></title>
+	
+</head>
+<body>
+	<script>
+		do {
+			var random = Math.floor((Math.random()*50)+1);
+		}
+		while (random % 2 == 0);
+		
+		for (var i = 1; i <= 50; i++) {
+			if (i % 2 == 0) {
+				continue;
+			} else if (i !== random && i % 2 == 0) {
+				console.log('Here is an odd number: ' + i);
+			} else {
+				console.log('Yipes! Skipping number: ' + random);
+			}
+		
+
+	</script>
+	
+</body>
+</html>
