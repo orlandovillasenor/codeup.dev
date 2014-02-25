@@ -1,13 +1,4 @@
-
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>TODO List</title>
-	</head>
-	<body>
-		<h1>My List:</h1>
-		<ul>
-			<?php 
+<?php 
 				function open_file($filename){
 				    $handle = fopen($filename, "r");
 				    $contents = fread($handle, filesize($filename));
@@ -19,16 +10,19 @@
 				function save_file($filename, $array){
 				    $handle = fopen($filename, 'w');
 				    $string = implode("\n", $array);
-				    return fwrite($handle, $string);
+				    fwrite($handle, $string);
 				    fclose($handle);
 				}
 				
-				if (filesize('data/todo-list.txt') > 0) {
-					$items = open_file('data/todo-list.txt');
-				} else {
-					$items = array();
-				}
-		
+				// if (filesize('data/todo-list.txt') > 0) {
+				// 	$items = open_file('data/todo-list.txt');
+				// } else {
+				// 	$items = array();
+				// }
+				
+				// ternary operator for if/else above
+				$items = (filesize('data/todo-list.txt') > 0) ? open_file('data/todo-list.txt') : array();
+
 				if (isset($_POST['item']) && !empty($_POST)) {
 						
 						$new_item = $_POST['item'];
@@ -44,15 +38,25 @@
 						header("Location: todo-list.php");
 						exit(0);
 					}
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TODO List</title>
+	</head>
+	<body>
+		<h1>My List:</h1>
+		<ul>
+			<?php 
 				
 				foreach ($items as $key => $item) {
-					echo "<li>$item <a href=\"?remove=$key\">Remove Item</a> </li>";
+					echo "<li>$item <a href=\"?remove=$key\">remove</a> </li>";
 				}
 			
 				//var_dump($_POST);
 			?>
 		</ul>
-		
 		<!-- <h3>Add Item to List</h3> -->
 			<form method="POST" action="">
 				<p>
@@ -63,9 +67,6 @@
 					<button type="submit">Add to list</button>
 				</p>
 			</form>
-			
-
-
 	</body>
 </html>
 				
