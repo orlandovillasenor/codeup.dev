@@ -1,50 +1,65 @@
 <?php
 
-// $address_book = [
-//     ['The White House', '1600 Pennsylvania Avenue NW', 'Washington', 'DC', '20500'],
-//     ['Marvel Comics', 'P.O. Box 1527', 'Long Island City', 'NY', '11101'],
-//     ['LucasArts', 'P.O. Box 29901', 'San Francisco', 'CA', '94129-0901']
-// ];
-//$address_book = [];
-$missing_required = FALSE;
-$entry = [];
-//$errors = []; 
+class AddressDataStore {
+	public $filename = '';
 
-function read_CSV($filename) {
-	$contents = [];
-	$handle = fopen($filename, 'r');
+	function read_address_book(){
+		$contents = [];
+	$handle = fopen($this->filename, 'r');
 	while (($data = fgetcsv($handle)) !== FALSE) {
 		$contents[] = $data;
 	}
 	fclose($handle);
 	return $contents;
-}
+	}
 
-function save_CSV($filename, $rows){
-    $handle = fopen($filename, 'w');
+	function write_address_book($rows){
+		$handle = fopen($this->filename, 'w');
 	foreach ($rows as $row) {
 		fputcsv($handle, $row);
 	}
 	fclose($handle);
+	}
 }
 
-$address_book = read_CSV("data/address-book.csv");
+$work_book = new AddressDataStore();
+$work_book->filename = "data/address-book.csv";
+$address_book = $work_book->read_address_book();
+
+$filename = "data/address-book.csv";
+$missing_required = FALSE;
+$entry = []; 
+
+// function read_CSV($filename) {
+// 	$contents = [];
+// 	$handle = fopen($filename, 'r');
+// 	while (($data = fgetcsv($handle)) !== FALSE) {
+// 		$contents[] = $data;
+// 	}
+// 	fclose($handle);
+// 	return $contents;
+// }
+
+// function save_CSV($filename, $rows){
+//     $handle = fopen($filename, 'w');
+// 	foreach ($rows as $row) {
+// 		fputcsv($handle, $row);
+// 	}
+// 	fclose($handle);
+// }
 
 if (isset($_POST['name']) && !empty($_POST['name'])) {
 	$name = $_POST['name'];
-	$name = ucwords($name);
-	//array_push($entry, $name);					
+	$name = ucwords($name);					
 	
 } else if (empty($_POST['name'])){
 	$name = '';
 	$missing_required = TRUE;
 	
-
 }
 if (isset($_POST['address']) && !empty($_POST['address'])) {
 	$address = $_POST['address'];
 	$address = ucwords($address);
-	//array_push($entry, $address);
 							
 } else if (empty($_POST['address'])){
 	$address = '';
@@ -61,8 +76,7 @@ if (isset($_POST['city']) && !empty($_POST['city'])) {
 }
 if (isset($_POST['state']) && !empty($_POST['state'])) {
 	$state = $_POST['state'];
-	$state = strtoupper($state);
-	//array_push($entry, $state);					
+	$state = strtoupper($state);				
 	
 } else if (empty($_POST['state'])){
 	$state = '';
@@ -70,8 +84,7 @@ if (isset($_POST['state']) && !empty($_POST['state'])) {
 }
 if (isset($_POST['zip']) && !empty($_POST['zip'])) {
 	$zip = $_POST['zip'];
-	$zip = ucwords($zip);
-	//array_push($entry, $zip);					
+	$zip = ucwords($zip);					
 	
 } else if (empty($_POST['zip'])){
 	$zip = '';
@@ -79,8 +92,7 @@ if (isset($_POST['zip']) && !empty($_POST['zip'])) {
 }
 if (isset($_POST['phone']) && !empty($_POST['phone'])) {
 	$phone = $_POST['phone'];
-	$phone = ucwords($phone);
-	//array_push($entry, $phone);					
+	$phone = ucwords($phone);					
 }
 
 if ($missing_required == FALSE) {
@@ -94,12 +106,12 @@ if (isset($_POST['phone']) && !empty($_POST['phone']) && !empty($entry)) {
 
 if ($missing_required == FALSE) {
 	array_push($address_book, $entry);
-	save_CSV("data/address-book.csv", $address_book);
+	$work_book->write_address_book($address_book);
 }
 
 if (isset($_GET['remove'])) {
 	unset($address_book[$_GET['remove']]);
-	save_CSV("data/address-book.csv", $address_book);
+	$work_book->write_address_book($address_book);
 	header("Location: address-book.php");
 	exit(0);
 }
