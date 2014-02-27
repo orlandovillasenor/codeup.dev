@@ -1,10 +1,10 @@
 <?php
 
-$address_book = [
-    ['The White House', '1600 Pennsylvania Avenue NW', 'Washington', 'DC', '20500'],
-    ['Marvel Comics', 'P.O. Box 1527', 'Long Island City', 'NY', '11101'],
-    ['LucasArts', 'P.O. Box 29901', 'San Francisco', 'CA', '94129-0901']
-];
+// $address_book = [
+//     ['The White House', '1600 Pennsylvania Avenue NW', 'Washington', 'DC', '20500'],
+//     ['Marvel Comics', 'P.O. Box 1527', 'Long Island City', 'NY', '11101'],
+//     ['LucasArts', 'P.O. Box 29901', 'San Francisco', 'CA', '94129-0901']
+// ];
 //$address_book = [];
 $missing_required = FALSE;
 $entry = [];
@@ -27,6 +27,8 @@ function save_CSV($filename, $rows){
 	}
 	fclose($handle);
 }
+
+$address_book = read_CSV("data/address-book.csv");
 
 if (isset($_POST['name']) && !empty($_POST['name'])) {
 	$name = $_POST['name'];
@@ -95,6 +97,13 @@ if ($missing_required == FALSE) {
 	save_CSV("data/address-book.csv", $address_book);
 }
 
+if (isset($_GET['remove'])) {
+	unset($address_book[$_GET['remove']]);
+	save_CSV("data/address-book.csv", $address_book);
+	header("Location: address-book.php");
+	exit(0);
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -105,12 +114,14 @@ if ($missing_required == FALSE) {
 <body>
 	<h1>Address Book</h1>
 <table>
-	<? foreach ($address_book as $rows) : ?>
+	<? foreach ($address_book as $key => $rows) : ?>
 		<tr>
 			<? foreach ($rows as $row) : ?>
 				<td><?= htmlspecialchars(strip_tags($row)); ?></td>
 			<? endforeach; ?>
+				<td><a href="?remove=<?= $key; ?>" >remove</a></td>
 		</tr>
+			
 	<? endforeach; ?>	
 </table>
 <? if ($missing_required == TRUE) : ?>
