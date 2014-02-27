@@ -3,42 +3,47 @@
 class AddressDataStore {
 	public $filename = '';
 
+	function __construct($filename) 
+    {
+        $this->filename = $filename;
+    }
 	function read_address_book(){
 		$contents = [];
-	$handle = fopen($this->filename, 'r');
+		$handle = fopen($this->filename, 'r');
+		while (($data = fgetcsv($handle)) !== FALSE) {
+			$contents[] = $data;
+		}
+		fclose($handle);
+		return $contents;
+	}
+
+	function write_address_book($rows){
+		$handle = fopen($this->filename, 'w');
+		foreach ($rows as $row) {
+			fputcsv($handle, $row);
+		}
+		fclose($handle);
+	}
+}
+//$filename = "data/address-book.csv";
+$work_book = new AddressDataStore("data/address-book.csv");
+//$work_book->filename = "data/address-book.csv";
+$address_book = $work_book->read_address_book();
+
+//$filename = "data/address-book.csv";
+$missing_required = FALSE;
+$invalid_file_type = FALSE;
+$entry = []; 
+
+function read_CSV($filename) {
+	$contents = [];
+	$handle = fopen($filename, 'r');
 	while (($data = fgetcsv($handle)) !== FALSE) {
 		$contents[] = $data;
 	}
 	fclose($handle);
 	return $contents;
-	}
-
-	function write_address_book($rows){
-		$handle = fopen($this->filename, 'w');
-	foreach ($rows as $row) {
-		fputcsv($handle, $row);
-	}
-	fclose($handle);
-	}
 }
-
-$work_book = new AddressDataStore();
-$work_book->filename = "data/address-book.csv";
-$address_book = $work_book->read_address_book();
-
-$filename = "data/address-book.csv";
-$missing_required = FALSE;
-$entry = []; 
-
-// function read_CSV($filename) {
-// 	$contents = [];
-// 	$handle = fopen($filename, 'r');
-// 	while (($data = fgetcsv($handle)) !== FALSE) {
-// 		$contents[] = $data;
-// 	}
-// 	fclose($handle);
-// 	return $contents;
-// }
 
 // function save_CSV($filename, $rows){
 //     $handle = fopen($filename, 'w');
@@ -109,6 +114,38 @@ if ($missing_required == FALSE) {
 	$work_book->write_address_book($address_book);
 }
 
+if (count($_FILES) > 0 && $_FILES['uploaded_file']['type'] != 'text/csv') {
+	$invalid_file_type = TRUE;
+} else if (count($_FILES) > 0 && $_FILES['uploaded_file']['error'] == 0 && $_FILES['uploaded_file']['type'] == 'text/csv') {
+    // Set the destination directory for uploads
+    $upload_dir = '/vagrant/sites/codeup.dev/public/uploads/';
+    // Grab the filename from the uploaded file by using basename
+    $base_filename = basename($_FILES['uploaded_file']['name']);
+    // Create the saved filename using the file's original name and our upload directory
+    $saved_filename = $upload_dir . $base_filename;
+    // Move the file from the temp location to our uploads directory
+    move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $saved_filename);
+    $uploaded_file = read_CSV($saved_filename);
+    foreach ($uploaded_file as $value) {
+     		//$value = ucwords($value);
+     		array_push($address_book, $value);
+ 	       	//$work_book->write_address_book($address_book);		
+     	}
+    $work_book->write_address_book($address_book);
+    // if (isset($_POST['replace_file'])) {
+    // 	unset($items);
+    // 	$items = $uploaded_file;
+    // 	save_file("data/todo-list.txt", $items);
+    // } else {
+    // 	foreach ($uploaded_file as $value) {
+    // 		//$value = ucwords($value);
+    // 		array_push($items, $value);
+ 	  //       save_file("data/todo-list.txt", $items);		
+    // 	}
+    // }
+}
+
+
 if (isset($_GET['remove'])) {
 	unset($address_book[$_GET['remove']]);
 	$work_book->write_address_book($address_book);
@@ -136,9 +173,6 @@ if (isset($_GET['remove'])) {
 			
 	<? endforeach; ?>	
 </table>
-<? if ($missing_required == TRUE) : ?>
-		<p><?= "Must submit all required fields"; ?></p>
-	<? endif; ?>
 <h2>Add Address:</h2>
 <p>* required field</p>
 <form method="POST" action="">
@@ -168,6 +202,24 @@ if (isset($_GET['remove'])) {
 		</p>
 		<p>
 			<button type="submit">Submit</button> 
+		</p>
+	</form>
+	<? if ($invalid_file_type == TRUE) : ?>
+		<p><?= "An invalid file type was uploaded"; ?></p>
+	<? endif; ?>
+	<h2>Upload File:</h2>
+
+	<form method="POST" enctype="multipart/form-data" action="">
+		<p>
+			<label for="uploaded_file">Add file to address book</label>
+			<input id="uploaded_file" name="uploaded_file" type="file">
+		</p>
+		<p>
+			<button type="submit">Upload</button>
+			<!--
+			<input id="replace_file" name="replace_file" type="checkbox">
+			<label for="replace_file">Replace existing list</label>
+			!-->
 		</p>
 	</form>	
 </body>
