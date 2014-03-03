@@ -1,57 +1,13 @@
-<?php
+<?php 
+require_once('classes/address-data-store.php');
 
-class AddressDataStore {
-	public $filename = '';
+$filename = "data/address-book.csv";
+$work_book = new AddressDataStore($filename);
+$address_book = $work_book->read();
 
-	function __construct($filename) 
-    {
-        $this->filename = $filename;
-    }
-	function read_address_book(){
-		$contents = [];
-		$handle = fopen($this->filename, 'r');
-		while (($data = fgetcsv($handle)) !== FALSE) {
-			$contents[] = $data;
-		}
-		fclose($handle);
-		return $contents;
-	}
-
-	function write_address_book($rows){
-		$handle = fopen($this->filename, 'w');
-		foreach ($rows as $row) {
-			fputcsv($handle, $row);
-		}
-		fclose($handle);
-	}
-}
-//$filename = "data/address-book.csv";
-$work_book = new AddressDataStore("data/address-book.csv");
-//$work_book->filename = "data/address-book.csv";
-$address_book = $work_book->read_address_book();
-
-//$filename = "data/address-book.csv";
 $missing_required = FALSE;
 $invalid_file_type = FALSE;
 $entry = []; 
-
-function read_CSV($filename) {
-	$contents = [];
-	$handle = fopen($filename, 'r');
-	while (($data = fgetcsv($handle)) !== FALSE) {
-		$contents[] = $data;
-	}
-	fclose($handle);
-	return $contents;
-}
-
-// function save_CSV($filename, $rows){
-//     $handle = fopen($filename, 'w');
-// 	foreach ($rows as $row) {
-// 		fputcsv($handle, $row);
-// 	}
-// 	fclose($handle);
-// }
 
 if (isset($_POST['name']) && !empty($_POST['name'])) {
 	$name = $_POST['name'];
@@ -61,6 +17,8 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {
 	$name = '';
 	$missing_required = TRUE;
 	
+} else if (strlen($_POST['name']) > 125) {
+	throw new Exception ("Name is longer than 125 characters.");
 }
 if (isset($_POST['address']) && !empty($_POST['address'])) {
 	$address = $_POST['address'];
@@ -69,6 +27,8 @@ if (isset($_POST['address']) && !empty($_POST['address'])) {
 } else if (empty($_POST['address'])){
 	$address = '';
 	$missing_required = TRUE;
+} else if (strlen($_POST['address']) > 125) {
+	throw new Exception ("Address is longer than 125 characters.");
 }
 if (isset($_POST['city']) && !empty($_POST['city'])) {
 	$city = $_POST['city'];
@@ -78,6 +38,8 @@ if (isset($_POST['city']) && !empty($_POST['city'])) {
 } else if (empty($_POST['city'])){
 	$city = '';
 	$missing_required = TRUE;
+} else if (strlen($_POST['city']) > 125) {
+	throw new Exception ("City is longer than 125 characters.");
 }
 if (isset($_POST['state']) && !empty($_POST['state'])) {
 	$state = $_POST['state'];
@@ -86,6 +48,8 @@ if (isset($_POST['state']) && !empty($_POST['state'])) {
 } else if (empty($_POST['state'])){
 	$state = '';
 	$missing_required = TRUE;
+} else if (strlen($_POST['state']) > 125) {
+	throw new Exception ("State is longer than 125 characters.");
 }
 if (isset($_POST['zip']) && !empty($_POST['zip'])) {
 	$zip = $_POST['zip'];
@@ -94,10 +58,14 @@ if (isset($_POST['zip']) && !empty($_POST['zip'])) {
 } else if (empty($_POST['zip'])){
 	$zip = '';
 	$missing_required = TRUE;
+} else if (strlen($_POST['zip']) > 125) {
+	throw new Exception ("Zip is longer than 125 characters.");
 }
 if (isset($_POST['phone']) && !empty($_POST['phone'])) {
 	$phone = $_POST['phone'];
 	$phone = ucwords($phone);					
+} else if (isset($_POST['phone']) && strlen($_POST['phone']) > 125) {
+	throw new Exception ("Phone is longer than 125 characters.");
 }
 
 if ($missing_required == FALSE) {
@@ -107,11 +75,13 @@ if (isset($_POST['phone']) && !empty($_POST['phone']) && !empty($entry)) {
 	$phone = $_POST['phone'];
 	$phone = ucwords($phone);
 	array_push($entry, $phone);					
+} else if (isset($_POST['phone']) && strlen($_POST['phone']) > 125) {
+	throw new Exception ("Phone is longer than 125 characters.");
 }
 
 if ($missing_required == FALSE) {
 	array_push($address_book, $entry);
-	$work_book->write_address_book($address_book);
+	$work_book->write($address_book);
 }
 
 if (count($_FILES) > 0 && $_FILES['uploaded_file']['type'] != 'text/csv') {
@@ -125,30 +95,21 @@ if (count($_FILES) > 0 && $_FILES['uploaded_file']['type'] != 'text/csv') {
     $saved_filename = $upload_dir . $base_filename;
     // Move the file from the temp location to our uploads directory
     move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $saved_filename);
-    $uploaded_file = read_CSV($saved_filename);
+    //$uploaded_file = read_CSV($saved_filename);
+    $upload = new AddressDataStore($saved_filename);
+    $uploaded_file = $upload->read($saved_filename);
     foreach ($uploaded_file as $value) {
      		//$value = ucwords($value);
      		array_push($address_book, $value);
  	       	//$work_book->write_address_book($address_book);		
      	}
-    $work_book->write_address_book($address_book);
-    // if (isset($_POST['replace_file'])) {
-    // 	unset($items);
-    // 	$items = $uploaded_file;
-    // 	save_file("data/todo-list.txt", $items);
-    // } else {
-    // 	foreach ($uploaded_file as $value) {
-    // 		//$value = ucwords($value);
-    // 		array_push($items, $value);
- 	  //       save_file("data/todo-list.txt", $items);		
-    // 	}
-    // }
+    $work_book->write($address_book);
 }
 
 
 if (isset($_GET['remove'])) {
 	unset($address_book[$_GET['remove']]);
-	$work_book->write_address_book($address_book);
+	$work_book->write($address_book);
 	header("Location: address-book.php");
 	exit(0);
 }
