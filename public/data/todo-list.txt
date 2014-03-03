@@ -1,7 +1,6 @@
-Bread
-Juice
 Greek Yogurt
 Ham
 Turkey
-Dogs
-Greek Yogurt
+Chicken
+Milk
+Bread
