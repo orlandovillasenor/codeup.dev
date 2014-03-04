@@ -1,33 +1,33 @@
 <?php
 require_once('classes/filestore.php');
 
-//$cleared_items = array();
+class InvalidInputException extends Exception {}
+
 $todo_list = new Filestore ('data/todo-list.txt');
+$invalid_file_type = FALSE;
+$error_message = '';
 
 if (filesize('data/todo-list.txt') > 0) {
-	//$items = $todo_list->read_lines();
 	$items = $todo_list->read();
 } else {
 	$items = array();
 }
 
+try {
 if (isset($_POST['item']) && strlen($_POST['item']) > 240) {
-	throw new Exception ("item entered is greater than 240 characters");
+	throw new InvalidInputException ("Item entered can not be greater than 240 characters. Please try again.");
 }
-
 if (isset($_POST['item']) && !empty($_POST['item'])) {
 	$new_item = $_POST['item'];
 	$new_item = ucwords($new_item);
 	array_push($items, $new_item);					
-	//$todo_list->write_lines($items);
 	$todo_list->write($items);
 } else if (isset($_POST['item']) && empty($_POST['item'])) {
- 		throw new Exception("item entered is empty.");
+ 		throw new InvalidInputException ("Please Re-Enter Item.");
 } 
-
-
-		
-$invalid_file_type = FALSE;
+} catch (InvalidInputException $e) {
+	$error_message = $e->getMessage();
+}		
 
 if (count($_FILES) > 0 && $_FILES['uploaded_file']['type'] != 'text/plain') {
 	$invalid_file_type = TRUE;
@@ -41,15 +41,13 @@ if (count($_FILES) > 0 && $_FILES['uploaded_file']['type'] != 'text/plain') {
     // Move the file from the temp location to our uploads directory
     move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $saved_filename);
     $upload = new Filestore($saved_filename);
-    $uploaded_file = $upload->read($saved_filename);
-    //$uploaded_file = $todo_list->read($saved_filename); 	
+    $uploaded_file = $upload->read($saved_filename); 	
 	if (isset($_POST['replace_file'])) {
     	unset($items);
     	$items = $uploaded_file;
     	$todo_list->write($items);
     } else {
     	foreach ($uploaded_file as $value) {
-    		//$value = ucwords($value);
     		array_push($items, $value);
  	        $todo_list->write($items);		
     	}
@@ -82,7 +80,11 @@ if (isset($_GET['remove'])) {
 		<p>Your list is empty</p>
 	<? endif; ?>
 	<h2>Add Item:</h2>
-
+	
+	<? if (!empty($error_message)) : ?>
+		<p><?= "$error_message"; ?></p>
+	<? endif; ?>
+	
 	<form method="POST" action="">
 		<p>
 			<label for="item">Enter Item:</label>
@@ -94,7 +96,7 @@ if (isset($_GET['remove'])) {
 	</form>	
 
 	<? if ($invalid_file_type == TRUE) : ?>
-		<p><?= "An invalid file type was uploaded"; ?></p>
+		<p><?= "An invalid file type was uploaded. Please try again"; ?></p>
 	<? endif; ?>
 
 	<h2>Upload File:</h2>
