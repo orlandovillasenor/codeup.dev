@@ -12,7 +12,7 @@
 
 // Add a say hello method to the person object that alerts hello using the firstName and lastName properties.
 	person.sayHello = function(){
-		alert('Hello ' + person.firstName + ' ' + person.lastName);
+		alert('Hello ' + this.firstName + ' ' + this.lastName);
 	};
 	person.sayHello();
 	</script>
