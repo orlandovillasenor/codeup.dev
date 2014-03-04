@@ -1,6 +1,8 @@
 <?php 
 require_once('classes/address-data-store.php');
 
+class InvalidInputException extends Exception {}
+
 $filename = "data/address-book.csv";
 $work_book = new AddressDataStore($filename);
 $address_book = $work_book->read();
@@ -8,8 +10,10 @@ $address_book = $work_book->read();
 $missing_required = FALSE;
 $invalid_file_type = FALSE;
 $entry = []; 
+$error_message = '';
 
-if (isset($_POST['name']) && !empty($_POST['name'])) {
+try {
+if (isset($_POST['name']) && !empty($_POST['name']) && strlen($_POST['name']) < 125) {
 	$name = $_POST['name'];
 	$name = ucwords($name);					
 	
@@ -17,10 +21,10 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {
 	$name = '';
 	$missing_required = TRUE;
 	
-} else if (strlen($_POST['name']) > 125) {
-	throw new Exception ("Name is longer than 125 characters.");
+} else if (isset($_POST['name']) && strlen($_POST['name']) > 125) {
+	throw new InvalidInputException ("Name can not be more than 125 characters. Please try again.");
 }
-if (isset($_POST['address']) && !empty($_POST['address'])) {
+if (isset($_POST['address']) && !empty($_POST['address']) && strlen($_POST['address']) < 125) {
 	$address = $_POST['address'];
 	$address = ucwords($address);
 							
@@ -28,9 +32,9 @@ if (isset($_POST['address']) && !empty($_POST['address'])) {
 	$address = '';
 	$missing_required = TRUE;
 } else if (strlen($_POST['address']) > 125) {
-	throw new Exception ("Address is longer than 125 characters.");
+	throw new InvalidInputException ("Address is longer than 125 characters. Please try again.");
 }
-if (isset($_POST['city']) && !empty($_POST['city'])) {
+if (isset($_POST['city']) && !empty($_POST['city']) && strlen($_POST['city']) < 125) {
 	$city = $_POST['city'];
 	$city = ucwords($city);
 	array_push($entry, $city);					
@@ -39,9 +43,9 @@ if (isset($_POST['city']) && !empty($_POST['city'])) {
 	$city = '';
 	$missing_required = TRUE;
 } else if (strlen($_POST['city']) > 125) {
-	throw new Exception ("City is longer than 125 characters.");
+	throw new InvalidInputException ("City is longer than 125 characters. Please try again.");
 }
-if (isset($_POST['state']) && !empty($_POST['state'])) {
+if (isset($_POST['state']) && !empty($_POST['state']) && strlen($_POST['state']) < 125) {
 	$state = $_POST['state'];
 	$state = strtoupper($state);				
 	
@@ -49,9 +53,9 @@ if (isset($_POST['state']) && !empty($_POST['state'])) {
 	$state = '';
 	$missing_required = TRUE;
 } else if (strlen($_POST['state']) > 125) {
-	throw new Exception ("State is longer than 125 characters.");
+	throw new InvalidInputException ("State is longer than 125 characters. Please try again.");
 }
-if (isset($_POST['zip']) && !empty($_POST['zip'])) {
+if (isset($_POST['zip']) && !empty($_POST['zip']) && strlen($_POST['zip']) < 125) {
 	$zip = $_POST['zip'];
 	$zip = ucwords($zip);					
 	
@@ -59,13 +63,13 @@ if (isset($_POST['zip']) && !empty($_POST['zip'])) {
 	$zip = '';
 	$missing_required = TRUE;
 } else if (strlen($_POST['zip']) > 125) {
-	throw new Exception ("Zip is longer than 125 characters.");
+	throw new InvalidInputException ("Zip is longer than 125 characters. Please try again.");
 }
-if (isset($_POST['phone']) && !empty($_POST['phone'])) {
+if (isset($_POST['phone']) && !empty($_POST['phone']) && strlen($_POST['phone']) < 125) {
 	$phone = $_POST['phone'];
 	$phone = ucwords($phone);					
 } else if (isset($_POST['phone']) && strlen($_POST['phone']) > 125) {
-	throw new Exception ("Phone is longer than 125 characters.");
+	throw new InvalidInputException ("Phone is longer than 125 characters. Please try again.");
 }
 
 if ($missing_required == FALSE) {
@@ -76,7 +80,11 @@ if (isset($_POST['phone']) && !empty($_POST['phone']) && !empty($entry)) {
 	$phone = ucwords($phone);
 	array_push($entry, $phone);					
 } else if (isset($_POST['phone']) && strlen($_POST['phone']) > 125) {
-	throw new Exception ("Phone is longer than 125 characters.");
+	throw new InvalidInputException ("Phone is longer than 125 characters. Please try again.");
+}
+} catch (InvalidInputException $e) {
+	$missing_required = TRUE;
+	$error_message = $e->getMessage();
 }
 
 if ($missing_required == FALSE) {
@@ -135,6 +143,11 @@ if (isset($_GET['remove'])) {
 	<? endforeach; ?>	
 </table>
 <h2>Add Address:</h2>
+
+<? if (!empty($error_message)) : ?>
+	<p><?= "$error_message"; ?></p>
+<? endif; ?>
+
 <p>* required field</p>
 <form method="POST" action="">
 		<p>
@@ -166,7 +179,7 @@ if (isset($_GET['remove'])) {
 		</p>
 	</form>
 	<? if ($invalid_file_type == TRUE) : ?>
-		<p><?= "An invalid file type was uploaded"; ?></p>
+		<p><?= "Uploaded file must be a .csv file. Please try again."; ?></p>
 	<? endif; ?>
 	<h2>Upload File:</h2>
 

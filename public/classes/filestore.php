@@ -8,11 +8,10 @@ class Filestore {
     public function __construct($filename = '') 
     {
         $this->filename = $filename;
-
+        strtolower($filename);    
         if (substr($filename, -3) == 'csv') {
             $this->is_csv = TRUE;
         }
-        // sets $this->filename
     }
 
     public function read() {
