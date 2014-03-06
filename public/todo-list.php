@@ -66,54 +66,61 @@ if (isset($_GET['remove'])) {
 <!DOCTYPE html>
 <html>
 <head>
+	<link href='http://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'>
 	<title>TODO List</title>
+	<link rel="stylesheet" href="/css/todo-list.css">
 </head>
 <body>
-	<h1>My List:</h1>
-	<? if (count($items) > 0) : ?>
-	<ul>
-		<? foreach ($items as $key => $item) : ?>
-			<li><?= htmlspecialchars(strip_tags($item)); ?> <a href="?remove=<?= $key; ?>" >remove</a></li>
-		<? endforeach; ?>
-	</ul>
-	<? else : ?>
-		<p>Your list is empty</p>
-	<? endif; ?>
-	<h2>Add Item:</h2>
-	
-	<? if (!empty($error_message)) : ?>
-		<p><?= "$error_message"; ?></p>
-	<? endif; ?>
-	
-	<form method="POST" action="">
-		<p>
-			<label for="item">Enter Item:</label>
-			<input id="item" name="item" type="text" autofocus>
-		</p>
-		<p>
-			<button type="submit">Add to list</button>
-		</p>
-	</form>	
+	<div id="page_wrap">
+		<h1>Go List Pro</h1>
+		<div id="container">
+		<? if (count($items) > 0) : ?>
+		
+			<ul>
+			<? foreach ($items as $key => $item) : ?>
+				<li><?= htmlspecialchars(strip_tags($item)); ?> <span id="remove_item"><a href="?remove=<?= $key; ?>" >remove</a></span></li>
+			<? endforeach; ?>
+			</ul>
+		
+		<? else : ?>
+			<p>Your list is empty</p>
+		<? endif; ?>
+		<h2>Add Item</h2>
+		
+		<? if (!empty($error_message)) : ?>
+			<p><?= "$error_message"; ?></p>
+		<? endif; ?>
+		
+		<form method="POST" action="">
+			<p>
+				<label for="item">Enter Item:</label>
+				<input id="item" name="item" type="text" autofocus>
+			</p>
+			<p>
+				<button type="submit">Add to list</button>
+			</p>
+		</form>	
 
-	<? if ($invalid_file_type == TRUE) : ?>
-		<p><?= "An invalid file type was uploaded. Please try again"; ?></p>
-	<? endif; ?>
+		<? if ($invalid_file_type == TRUE) : ?>
+			<p><?= "An invalid file type was uploaded. Please try again"; ?></p>
+		<? endif; ?>
 
-	<h2>Upload File:</h2>
+		<h2>Upload File</h2>
 
-	<form method="POST" enctype="multipart/form-data" action="">
-		<p>
-			<label for="uploaded_file">File to add to list</label>
-			<input id="uploaded_file" name="uploaded_file" type="file">
-		</p>
-		<p>
-			<button type="submit">Upload</button>
-			<input id="replace_file" name="replace_file" type="checkbox">
-			<label for="replace_file">Replace existing list</label>
-			
-		</p>
-	</form>
-
+		<form method="POST" enctype="multipart/form-data" action="">
+			<p>
+				<label for="uploaded_file">File to add to list</label>
+				<input id="uploaded_file" name="uploaded_file" type="file">
+			</p>
+			<p>
+				<button type="submit">Upload</button>
+				<input id="replace_file" name="replace_file" type="checkbox">
+				<label for="replace_file">Replace existing list</label>
+				
+			</p>
+		</form>
+		</div>
+	</div>
 </body>
 </html>
 				

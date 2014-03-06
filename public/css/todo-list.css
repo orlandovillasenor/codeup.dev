@@ -1,0 +1,59 @@
+h1 {
+	color: #F0E93E;
+	/*text-decoration: underline;*/
+	font-family: 'Russo One', sans-serif;
+	font-size: 4.5em;
+	text-shadow: 2px 2px 5px #000;
+
+}
+
+h2 {
+	color: #266579;
+	text-decoration: underline;
+	font-size: 1.3em;
+	text-shadow: 1px 0px 1px #FFF;
+}
+
+body {
+	background-image: url('/img/white_carbonfiber.png');
+	text-align: center;
+}
+
+ul {
+	list-style-image: url('/img/silver_circle_bullet.gif');
+	list-style-position: inside;
+	font-size: 1.3em;
+	margin-left: 30%;
+	text-align: left;
+	/*margin: 0 auto;*/
+	/*display:-moz-inline-stack;
+	display:inline-block;
+	zoom:1;
+	*display:inline;*/
+
+}
+
+#page_wrap {
+     width: 800px;
+     margin: 0 auto;
+}
+
+p {
+	font-size: 1em;
+}
+
+#remove_item {
+	font-size: .6em;
+}
+
+#container {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+	padding-bottom: 19px;
+	background-color: #ECECEC;
+	border: 1px #ECECEC;
+	border-radius: 30px;
+
+}
