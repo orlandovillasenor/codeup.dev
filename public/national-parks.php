@@ -19,14 +19,7 @@ try {
     $date_established = ($_POST['date_established']);
     $area_in_acres = ($_POST['area_in_acres']);
     $entry = ['name' => $name, 'location' => $location, 'description' => $description, 'date_established' => $date_established, 'area_in_acres' => $area_in_acres]; 
-    // foreach ($entry as $key => $value){
-    //   if (empty($value)) {
-    //     $missing_required = TRUE;
-    //     $value = '';
-    //   } else if (strlen($value) > 125) {
-    //     throw new InvalidInputException ("$key must be less than 125 characters");
-    //   }     
-    // }
+    
     if ($missing_required == FALSE) {
       // Create the prepared statement
       $stmt = $mysqli->prepare("INSERT INTO national_parks (name, location, description, date_established, area_in_acres) VALUES (?, ?, ?, ?, ?)");
@@ -51,8 +44,8 @@ if (!empty($_GET['sort_column']) && in_array($_GET['sort_column'], $valid_get)) 
 }
 
 $sortOrder = 'asc';
-if ($_GET['sort_order'] == 'desc') {
-  $sortOrder = 'desc';
+if (!empty($_GET['sort_order']) && $_GET['sort_order'] == 'desc') {
+  $sortOrder = $_GET['sort_order'];
 }
 
 ?>
@@ -87,13 +80,6 @@ if ($_GET['sort_order'] == 'desc') {
           <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="#">About</a></li>
             <li><a href="#page-table">Parks</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Social Media <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Twitter</a></li>
-                  <li><a href="#">Facebook</a></li>
-                  <li><a href="#">Instagram</a></li>   
-                </ul>
             </li>
             <li><a href="#page-form">Submit Form</a></li>           
           </ul>
