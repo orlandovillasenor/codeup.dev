@@ -18,8 +18,14 @@ try {
     $description = ucfirst($_POST['description']);
     $date_established = ($_POST['date_established']);
     $area_in_acres = ($_POST['area_in_acres']);
-    $entry = ['name' => $name, 'location' => $location, 'description' => $description, 'date_established' => $date_established, 'area_in_acres' => $area_in_acres]; 
-    
+    $entry = ['name' => $name, 'location' => $location, 'description' => $description, 'date_established' => $date_established, 'area_in_acres' => $area_in_acres];
+    foreach ($entry as $key => $value){
+      if (empty($value)) {
+        $missing_required = TRUE;
+        $value = '';
+      } 
+    }
+
     if ($missing_required == FALSE) {
       // Create the prepared statement
       $stmt = $mysqli->prepare("INSERT INTO national_parks (name, location, description, date_established, area_in_acres) VALUES (?, ?, ?, ?, ?)");
@@ -78,8 +84,7 @@ if (!empty($_GET['sort_order']) && $_GET['sort_order'] == 'desc') {
         </button>
         <div class="collapse navbar-collapse navHeaderCollapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">About</a></li>
-            <li><a href="#page-table">Parks</a></li>
+            <li class="active"><a href="#page-table">Parks</a></li>
             </li>
             <li><a href="#page-form">Submit Form</a></li>           
           </ul>
@@ -118,7 +123,7 @@ if (!empty($_GET['sort_order']) && $_GET['sort_order'] == 'desc') {
             } else {
               $result = $mysqli->query("SELECT * FROM national_parks");
             }
-            
+            $mysqli->close();
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . htmlspecialchars(strip_tags($row['name'])) . "</td>";
