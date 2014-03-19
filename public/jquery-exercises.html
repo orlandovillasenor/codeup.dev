@@ -9,6 +9,7 @@
 <body>
 	<div class="container">
 		<h1 id="header" class="codeup">San Antonio Spurs</h1>
+			<div class="container" ><img src="/img/spurs-logo.jpg" alt="" height="25%" width="25%"></div>
 			<p class="codeup">The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. They are part of the Southwest Division of the Western Conference in the National Basketball Association (NBA).</p>
 		<div>
 		<h2 id="roster">2013-2014 Team Roster</h2>
@@ -35,8 +36,15 @@
 	<script src="/js/jquery.js" ></script>	
 	<script>
 		$(document).ready(function() {
-			$('.codeup').css('border', 'solid #000', '1px');
+			$('li').css('font-size', '20px');
 		});
+			$('h1, p, li').css('background-color', '#0FF');
+			
+			$(function() {
+				var contents = $('h1').html();
+				alert(contents);
+			});
+
 	</script>
 </body>
 </html>
