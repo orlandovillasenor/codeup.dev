@@ -4,15 +4,15 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Exampe jQuery Page</title>
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 <body>
 	<div class="container">
-		<h1 id="header">San Antonio Spurs</h1>
-			<p>The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. They are part of the Southwest Division of the Western Conference in the National Basketball Association (NBA).</p>
+		<h1 id="header" class="codeup">San Antonio Spurs</h1>
+			<p class="codeup">The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. They are part of the Southwest Division of the Western Conference in the National Basketball Association (NBA).</p>
 		<div>
 		<h2 id="roster">2013-2014 Team Roster</h2>
-			<ul class="roster">
+			<ul class="codeup">
 				<li>Jeff Ayres</li>
 				<li>Aron Baynes</li>
 				<li>Marco Belinelli</li>
@@ -35,14 +35,8 @@
 	<script src="/js/jquery.js" ></script>	
 	<script>
 		$(document).ready(function() {
-			var contents = $('#header').html();
-			alert(contents);
+			$('.codeup').css('border', 'solid #000', '1px');
 		});
-		$(document).ready(function() {
-			var contents = $('#roster').html();
-			alert(contents);
-		});
-
 	</script>
 </body>
 </html>
