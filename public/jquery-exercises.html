@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Exampe jQuery Page</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<div class="container">
+		<h1 id="header">San Antonio Spurs</h1>
+			<p>The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. They are part of the Southwest Division of the Western Conference in the National Basketball Association (NBA).</p>
+		<div>
+		<h2 id="roster">2013-2014 Team Roster</h2>
+			<ul class="roster">
+				<li>Jeff Ayres</li>
+				<li>Aron Baynes</li>
+				<li>Marco Belinelli</li>
+				<li>Matt Bonner</li>
+				<li>Austin Daye</li>
+				<li>Boris Diaw</li>
+				<li>Tim Duncan</li>
+				<li>Manu Ginobili</li>
+				<li>Danny Green</li>
+				<li>Cory Joseph</li>
+				<li>Kawhi Leonard</li>
+				<li>Patty Mills</li>
+				<li>Tony Parker</li>
+				<li>Tiago Splitter</li>
+			</ul>	
+		</div>
+
+
+	</div>		
+	<script src="/js/jquery.js" ></script>	
+	<script>
+		$(document).ready(function() {
+			var contents = $('#header').html();
+			alert(contents);
+		});
+		$(document).ready(function() {
+			var contents = $('#roster').html();
+			alert(contents);
+		});
+
+	</script>
+</body>
+</html>
