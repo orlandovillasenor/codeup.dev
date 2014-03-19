@@ -5,12 +5,17 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Exampe jQuery Page</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<style>
+		.clickable {
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 	<div class="container">
-		<h1 id="header" class="codeup">San Antonio Spurs</h1>
+		<h1 id="header" class="codeup clickable">San Antonio Spurs</h1>
 			<div class="container" ><img src="/img/spurs-logo.jpg" alt="" height="25%" width="25%"></div>
-			<p class="codeup">The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. They are part of the Southwest Division of the Western Conference in the National Basketball Association (NBA).</p>
+			<p class="codeup clickable">The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. They are part of the Southwest Division of the Western Conference in the National Basketball Association (NBA).</p>
 		<div>
 		<h2 id="roster">2013-2014 Team Roster</h2>
 			<ul class="codeup">
@@ -35,15 +40,22 @@
 	</div>		
 	<script src="/js/jquery.js" ></script>	
 	<script>
-		$(document).ready(function() {
-			$('li').css('font-size', '20px');
+		$('h1').click(function() {
+			$(this).css('background-color', '#0ff');
 		});
-			$('h1, p, li').css('background-color', '#0FF');
+		 $('p').dblclick(function() {
+		 	$(this).css('font-size', '18px');
+		 });	
 			
-			$(function() {
-				var contents = $('h1').html();
-				alert(contents);
-			});
+		$('li').hover(
+		    function() {
+	            $(this).css('color', '#f00');
+	        },
+	        function() {
+	            $(this).css('color', '#FFF');
+	        }
+	    );
+		
 
 	</script>
 </body>
