@@ -1,33 +1,63 @@
 <?php
-require_once('classes/filestore.php');
+
+//error_reporting(0);
+
+// Get new instance of MySQLi object
+$mysqli = @new mysqli('127.0.0.1', 'codeup', 'password', 'todo_db');
+
+// Check for errors
+if ($mysqli->connect_errno) {
+    throw new Exception('Failed to connect to MySQL: (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
+
+//require_once('classes/filestore.php');
 
 class InvalidInputException extends Exception {}
 
-$todo_list = new Filestore ('data/todo-list.txt');
+//$todo_list = new Filestore ('data/todo-list.txt');
+//$todo_list = [];
 $invalid_file_type = FALSE;
 $error_message = '';
+$items = [];
 
-if (filesize('data/todo-list.txt') > 0) {
-    $items = $todo_list->read();
-} else {
-    $items = array();
-}
+// if (filesize('data/todo-list.txt') > 0) {
+//     $items = $todo_list->read();
+// } else {
+//     $items = array();
+// }
 
 try {
-if (isset($_POST['item']) && strlen($_POST['item']) > 240) {
+if (isset($_POST['item']) && strlen($_POST['item']) > 200) {
     throw new InvalidInputException ("Item entered can not be greater than 240 characters. Please try again.");
 }
 if (isset($_POST['item']) && !empty($_POST['item'])) {
     $new_item = $_POST['item'];
     $new_item = ucwords($new_item);
-    array_push($items, $new_item);                  
-    $todo_list->write($items);
+    //array_push($items, $new_item);                  
+    //$todo_list->write($items);
 } else if (isset($_POST['item']) && empty($_POST['item'])) {
-        throw new InvalidInputException ("Please Re-Enter Item.");
+        throw new InvalidInputException ("You must enter an item!");
 } 
 } catch (InvalidInputException $e) {
     $error_message = $e->getMessage();
 }       
+
+if (isset($_POST['item']) && !empty($_POST['item'])) {
+    // Create the prepared statement
+    $stmt = $mysqli->prepare("INSERT INTO todos (todo) VALUES (?)");
+
+    // bind parameters
+    $stmt->bind_param("s", $new_item);
+
+    // execute query, return result
+    $stmt->execute();
+}
+
+if (!empty($_POST['remove'])) {
+    $stmt = $mysqli->prepare("DELETE FROM todos WHERE id = ?;");
+    $stmt->bind_param("i", $_POST['remove']);
+    $stmt->execute();
+}
 
 if (count($_FILES) > 0 && $_FILES['uploaded_file']['type'] != 'text/plain') {
     $invalid_file_type = TRUE;
@@ -54,13 +84,18 @@ if (count($_FILES) > 0 && $_FILES['uploaded_file']['type'] != 'text/plain') {
     }
 }
 
-if (isset($_GET['remove'])) {
-    $itemsId = $_GET['remove'];
-    unset($items[$itemsId]);
-    $todo_list->write($items);
-    header("Location: todo.php");
-    exit(0);
-}
+$itemsPerPage = 5;
+$currentPage = !empty($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($currentPage - 1) * $itemsPerPage;
+
+$result = $mysqli->query("SELECT * FROM todos LIMIT $itemsPerPage OFFSET $offset;");
+$allTodos = $mysqli->query("SELECT * FROM todos;"); 
+//$result = $mysqli->query("SELECT * FROM todos");
+
+$maxPage = ceil($allTodos->num_rows / $itemsPerPage); 
+$prevPage = $currentPage > 1 ? $currentPage - 1 : null;
+$nextPage = $currentPage < $maxPage ? $currentPage + 1 : null;
+
 ?>
 
 
@@ -155,19 +190,23 @@ if (isset($_GET['remove'])) {
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <h2 class="section-heading">My List</h2>
-                    <? if (count($items) > 0) : ?>
-        
-                        <ul>
-                        <? foreach ($items as $key => $item) : ?>
-                            <li><?= htmlspecialchars(strip_tags($item)); ?> <span id="remove_item"><a href="?remove=<?= $key; ?>" >remove</a></span></li>
-                        <? endforeach; ?>
-                        </ul>
-                    
-                    <? else : ?>
-                        <p>Your list is empty</p>
-                    <? endif; ?>
-                        
-                    
+                        <table class="table table-striped">                           
+                            <? while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?= $row['todo']; ?> </td>
+                                <td><button class="btn btn-danger btn-sm pull-right" onclick="removeById(<?= $row['id']; ?>)">Remove</button></td>
+                            </tr>
+                            <? endwhile; ?>
+                        </table>
+                    <div class="clearfix">
+        <? if ($prevPage != null): ?>
+            <a href="?page=<?= $prevPage;  ?>#todo" class="pull-left btn btn-default btn-sm">&lt; Previous</a> 
+        <? endif; ?>
+ 
+        <? if ($nextPage != null): ?>
+            <a href="?page=<?= $nextPage; ?>#todo" class="pull-right btn btn-default btn-sm">Next &gt;</a> 
+        <? endif; ?>
+    </div>
                 </div>
                 
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
@@ -176,13 +215,13 @@ if (isset($_GET['remove'])) {
                     <h2>Add Item:</h2>
         
                     <? if (!empty($error_message)) : ?>
-                        <p><?= "$error_message"; ?></p>
+                        <div class="alert alert-danger"><?= "$error_message"; ?></div>                        
                     <? endif; ?>
 
-<form method="POST" action="">
+        <form method="POST" action="todo.php#todo">
             <p>
                 <label for="item">Enter Item:</label>
-                <input id="item" name="item" type="text" autofocus>
+                <input id="item" name="item" type="text">
             </p>
             <p>
                 <button type="submit">Add to list</button>
@@ -216,8 +255,6 @@ if (isset($_GET['remove'])) {
 
     </div>
     <!-- /.content-section-a -->
-
-    
 
     
     <!-- /.content-section-a -->
@@ -271,10 +308,26 @@ if (isset($_GET['remove'])) {
         </div>
     </footer>
 
+
+<form id="removeForm" action="todo.php#todo" method="post">
+    <input id="removeId" type="hidden" name="remove" value="">
+</form>
+
     <!-- JavaScript -->
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
+ <script>
+    var form = document.getElementById('removeForm');
+    var removeId = document.getElementById('removeId');
 
+    function removeById(id) {
+        if (confirm('Are you sure you want to remove item?')) {
+        removeId.value = id;
+        form.submit();
+        }
+    }
+
+</script>
 </body>
 
 </html>
