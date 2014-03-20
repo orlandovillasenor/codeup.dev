@@ -18,18 +18,17 @@
 <body>
 	<div class="container">
 		<h1>National Parks FAQ</h1>
-			<a href="#" class="toggle">Click to toggle answers</a>
 			<dl>
 				<dt class="clickable">Question 1</dt>
-					<dd class="invisible">aldflkjsd</dd>
+					<dd>aldflkjsd</dd>
 				<dt class="clickable">Question 2</dt>
-					<dd class="invisible">aldflkjsd</dd>
+					<dd>aldflkjsd</dd>
 				<dt class="clickable">Question 3</dt>
-					<dd class="invisible">aldflkjsd</dd>
+					<dd>aldflkjsd</dd>
 				<dt class="clickable">Question 4</dt>
-					<dd class="invisible">aldflkjsd</dd>
+					<dd>aldflkjsd</dd>
 				<dt class="clickable">Question 5</dt>
-					<dd class="invisible">aldflkjsd</dd>
+					<dd>aldflkjsd</dd>
 			</dl>
 	<h3>Arches</h3>
 		<ul id="arches">
@@ -58,10 +57,11 @@
 	</div>
 	<script src="/js/jquery.js" ></script>	
 	<script>
-		$('.toggle').click(function() {
-			$('dd').toggleClass('invisible');
-		});
-
+		$('dd').hide();
+		$('dt').click(function () {
+            $(this).next().toggle();
+        });
+		
 		$('#national-parks').children().each(function(index) {
 			if (index % 2 == 0) {
 				$(this).css('background-color', '#CCC');
@@ -73,8 +73,9 @@
 		});
 
 		$('li').click(function() {
-			$(this).parent().addClass('invisible');
+			$(this).parent().hide();
 		});
+
 	</script>
 </body>
 </html>
