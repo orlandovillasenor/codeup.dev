@@ -9,6 +9,10 @@
 		.clickable {
 			cursor: pointer;
 		}
+
+		.invisible {
+			display: none;
+		}
 	</style>
 </head>
 <body>
@@ -17,47 +21,86 @@
 			<div class="container" ><img src="/img/spurs-logo.jpg" alt="" height="25%" width="25%"></div>
 			<p class="codeup clickable">The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. They are part of the Southwest Division of the Western Conference in the National Basketball Association (NBA).</p>
 		<div>
-		<h2 id="roster">2013-2014 Team Roster</h2>
-			<ul class="codeup">
+		<h2 id='roster-heading' class="invisible">2013-2014 Team Roster</h2>
+			<ul class="roster invisible col-md-6">
 				<li>Jeff Ayres</li>
 				<li>Aron Baynes</li>
 				<li>Marco Belinelli</li>
 				<li>Matt Bonner</li>
 				<li>Austin Daye</li>
 				<li>Boris Diaw</li>
-				<li>Tim Duncan</li>
-				<li>Manu Ginobili</li>
+				<li class="timmy">Tim Duncan</li>
+				<li class="manu">Manu Ginobili</li>
 				<li>Danny Green</li>
 				<li>Cory Joseph</li>
 				<li>Kawhi Leonard</li>
 				<li>Patty Mills</li>
-				<li>Tony Parker</li>
+				<li class="tony">Tony Parker</li>
 				<li>Tiago Splitter</li>
 			</ul>	
 		</div>
-
-
+		<div class="container col-md-6">
+			<img id="timmy-pic" class="invisible" src="http://upload.wikimedia.org/wikipedia/commons/1/14/Tim_Duncan.jpg" height"50%" width="50%" alt="Tim Duncan">
+			<img id="manu-pic" class="invisible" src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Manu_Gin%C3%B3bili_%28cropped_2%29.jpg/220px-Manu_Gin%C3%B3bili_%28cropped_2%29.jpg" height"50%" width="50%" alt="Manu Ginobili">
+			<img id="tony-pic" class="invisible" src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Parker_tongue2.JPG/170px-Parker_tongue2.JPG" height"50%" width="50%" alt="Tony Parker">
+		</div>
 	</div>		
 	<script src="/js/jquery.js" ></script>	
 	<script>
 		$('h1').click(function() {
-			$(this).css('background-color', '#0ff');
+			$('#roster-heading, .roster').removeClass('invisible');
 		});
 		 
 		$('p').dblclick(function() {
 		 	$(this).css('font-size', '18px');
-		});	
+		});
+	
 			
 		$('li').hover(
 		    function() {
 	            $(this).css('color', '#0ff');
 	            $(this).css('font-size', '48px')
+	            
 	        },
 	        function() {
-	            $(this).css('color', '#FFF');
-	            $(this).css('font-size', '10px')
+	            $(this).css('color', '#000');
+	            $(this).css('font-size', '14px')	            
 	        }
 	    );
+
+	    $('.timmy').hover(
+	    	function(){
+	    		$('#timmy-pic').toggleClass('invisible');
+
+	    	},
+	    	function() {
+	    		$('#timmy-pic').toggleClass('invisible');		
+	    	}
+	    );
+
+	    $('.manu').hover(
+	    	function(){
+	    		$('#manu-pic').toggleClass('invisible');
+
+	    	},
+	    	function() {
+	    		$('#manu-pic').toggleClass('invisible');		
+	    	}
+	    );
+
+	    $('.tony').hover(
+	    	function(){
+	    		$('#tony-pic').toggleClass('invisible');
+
+	    	},
+	    	function() {
+	    		$('#tony-pic').toggleClass('invisible');		
+	    	}
+	    );
+
+	    // $('h1').click(function() {
+	    // 	alert($('h1').html());
+	    // });
 		
 
 	</script>
