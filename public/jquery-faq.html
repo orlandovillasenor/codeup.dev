@@ -20,22 +20,60 @@
 		<h1>National Parks FAQ</h1>
 			<a href="#" class="toggle">Click to toggle answers</a>
 			<dl>
-				<dt class="clickable">ksflkdf</dt>
+				<dt class="clickable">Question 1</dt>
 					<dd class="invisible">aldflkjsd</dd>
-				<dt class="clickable">ksflkdf</dt>
+				<dt class="clickable">Question 2</dt>
 					<dd class="invisible">aldflkjsd</dd>
-				<dt class="clickable">ksflkdf</dt>
+				<dt class="clickable">Question 3</dt>
 					<dd class="invisible">aldflkjsd</dd>
-				<dt class="clickable">ksflkdf</dt>
+				<dt class="clickable">Question 4</dt>
 					<dd class="invisible">aldflkjsd</dd>
-				<dt class="clickable">ksflkdf</dt>
+				<dt class="clickable">Question 5</dt>
 					<dd class="invisible">aldflkjsd</dd>
 			</dl>
+	<h3>Arches</h3>
+		<ul id="arches">
+		    <li>Fun Fact 1</li>
+		    <li>Fun Fact 2</li>
+		    <li>Fun Fact 3</li>
+		    <li>Fun Fact 4</li>
+		
+		</ul>
+	<h3>Big Bend</h3>
+		<ul id="big-bend">
+		    <li>Fun Fact 1</li>
+		    <li>Fun Fact 2</li>
+		    <li>Fun Fact 3</li>
+		    <li>Fun Fact 4</li>
+	    
+		</ul>
+	<h3>Death Valley</h3>
+		<ul id="death-valley">
+		    <li>Fun Fact 1</li>
+		    <li>Fun Fact 2</li>
+		    <li>Fun Fact 3</li>
+		    <li>Fun Fact 4</li>
+		    
+		</ul>
 	</div>
 	<script src="/js/jquery.js" ></script>	
 	<script>
 		$('.toggle').click(function() {
 			$('dd').toggleClass('invisible');
+		});
+
+		$('#national-parks').children().each(function(index) {
+			if (index % 2 == 0) {
+				$(this).css('background-color', '#CCC');
+			}
+		});
+
+		$('ul').each(function() {
+			$(this).children().first().css('font-weight', 'bold');
+		})
+
+		$('li').click(function() {
+			$(this).parent().addClass('invisible');
 		});
 	</script>
 </body>
