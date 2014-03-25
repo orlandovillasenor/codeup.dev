@@ -1,0 +1,76 @@
+.clickable {
+	cursor: pointer;
+}
+
+#game-board {
+	margin: 10px auto;
+	width: 456px;
+}
+
+.square {
+	border: 1px solid #000;
+	float: left;
+	height: 150px;
+	width: 150px;
+}
+
+body {
+	text-align: center;
+	background-image: url(/img/spongebob-background2.jpg);
+	background-size: cover;
+}
+
+.whack-bob {
+	height: 146px;
+	width: 146px;
+	display: none;
+}
+
+#start-button {	
+	margin-top: 20px;
+	height: 50px;
+	width: 180px;
+	font-size: 20px;
+	background-color: #FFF;
+}
+
+#score {
+	font-size: 30px;
+	margin-top: 10px;
+}
+
+#high-score {
+	font-size: 30px;
+	margin-top: 10px;
+}
+
+#end-image {
+	margin-bottom: 20px;
+	border: 10px solid #FFF;
+}
+
+#gary {
+	float: right;
+}
+
+#audio-pause {
+	font-size: 16px;
+	background: none;
+	border: none;
+}
+
+#audio-play {
+	font-size: 16px;
+	background: none;
+	border: none;
+}
+
+h1 {
+	font-family: 'Joti One', cursive;
+	font-size: 56px;
+	color: rgba(255, 0, 125, 0.8);
+	border-radius: 100px;
+	text-shadow: 5px -2px 1px #330;	
+	margin-top: 10px;
+}
+

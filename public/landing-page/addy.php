@@ -188,7 +188,7 @@ if (isset($_GET['remove'])) {
 <form method="POST" action="">
 		<p>
 			<label for="name">Name: </label>
-			<input id="name" name="name" type="text" value="<?php echo isset($_POST['name'])? $_POST['name'] : "" ?>" autofocus> * <? if(empty($name)) {echo "Name Required";} ?>
+			<input id="name" name="name" type="text" value="<?php echo isset($_POST['name'])? $_POST['name'] : "" ?>"> * <? if(empty($name)) {echo "Name Required";} ?>
 		</p>
 		<p>
 			<label for="address">Address: </label>

@@ -30,7 +30,7 @@
 				<dt class="clickable">Question 5</dt>
 					<dd>aldflkjsd</dd>
 			</dl>
-	<h3>Arches</h3>
+	<h3 class="clickable">Arches</h3>
 		<ul id="arches">
 		    <li>This site features more than 2,000 natural sandstone arches.</li>
 		    <li>In a desert climate millions of years of erosion have led to these structures.</li>
@@ -38,7 +38,7 @@
 		    <li>Other geologic formations are stone columns, spires, fins, and towers.</li>
 		
 		</ul>
-	<h3>Big Bend</h3>
+	<h3 class="clickable">Big Bend</h3>
 		<ul id="big-bend">
 		    <li>Named for the Bend of the Rio Grande along the US–Mexico border.</li>
 		    <li>This park includes a part of the Chihuahuan Desert.</li>
@@ -46,7 +46,7 @@
 		    <li>It contains more than 1,200 species of plants, more than 450 species of birds, 56 species of reptiles, and 75 species of mammals.</li>
 	    
 		</ul>
-	<h3>Death Valley</h3>
+	<h3 class="clickable">Death Valley</h3>
 		<ul id="death-valley">
 		    <li>Death Valley is the hottest, lowest, and driest place in the United States.</li>
 		    <li>Daytime temperatures have topped 130°F (54°C) and it is home to Badwater Basin.</li>
@@ -59,7 +59,7 @@
 	<script>
 		$('dd').hide();
 		$('dt').click(function () {
-            $(this).next().toggle();
+            $(this).next().fadeToggle();
         });
 		
 		$('#national-parks').children().each(function(index) {
@@ -72,8 +72,8 @@
 			$(this).children().first().css('font-weight', 'bold');
 		});
 
-		$('li').click(function() {
-			$(this).parent().hide();
+		$('h3').click(function() {
+			$(this).next().fadeToggle();
 		});
 
 	</script>

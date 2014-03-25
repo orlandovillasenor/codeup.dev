@@ -186,7 +186,7 @@ if (!empty($_GET['sort_order']) && $_GET['sort_order'] == 'desc') {
   <!--Footer-->
   <div class="container">
     <div class="navbar navbar-inverse navbar-bottom">
-      <p class="navbar-text">&copy 2014 Site Built By <a href="http://codeup.dev/my-site/index.html" target="_blank">Orlando Villaseñor</a></p>
+      <p class="navbar-text copyright text-muted small">Copyright &copy; <a href="http://codeup.dev/my-site/index.html">Orlando Villaseñor</a>  2014</p>
       <a href="http://en.wikipedia.org/wiki/List_of_national_parks_of_the_United_States" target="_blank" class="navbar-btn btn-danger btn pull-right">More Park Fun</a>
     </div>
   </div>  

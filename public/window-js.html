@@ -12,14 +12,11 @@
         function save() {
             alert('Saved!');
         }
-        
-        var timeoutId = null;
-        
+
         function autosave() {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(function () {
-                save();
-            }, 5000);          
+            var timeoutId = setTimeout(function () {
+                alert('Here is a delayed hello!');
+            }, delay);
             // todo:
             // Use setTimeout and clearTimeout within this function
             // so that the save() function is called 5 seconds after
@@ -28,13 +25,15 @@
 
         }
 
+
+
         // don't modify the line below
         // this causes the autosave function to be called whenever
         // a key up event occurs in the textarea
         // we will learn about events in the DOM lessons
-        var textarea = document.getElementById('important');
-        textarea.addEventListener('keyup', autosave, false);
-        
+        // var textarea = document.getElementById('important');
+        // textarea.addEventListener('keyup', autosave, false);
+        $('textarea').keyup(autosave);
     </script>
 
 </body>
