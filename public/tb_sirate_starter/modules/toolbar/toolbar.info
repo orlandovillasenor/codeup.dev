@@ -1,0 +1,18 @@
+name = Toolbar
+description = Provides a toolbar that shows the top-level administration menu items and links from other modules.
+core = 7.x
+package = Core
+version = VERSION
+
+; Information added by drupal.org packaging script on 2013-04-03
+version = "7.22"
+project = "drupal"
+datestamp = "1365027012"
+
+
+; Information added by drupal.org packaging script on 2013-08-12
+version = "7.x-1.0-beta5"
+core = "7.x"
+project = "tb_sirate_starter"
+datestamp = "1376297847"
+

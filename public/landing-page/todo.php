@@ -10,8 +10,6 @@ if ($mysqli->connect_errno) {
     throw new Exception('Failed to connect to MySQL: (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
-//require_once('classes/filestore.php');
-
 class InvalidInputException extends Exception {}
 
 //$todo_list = new Filestore ('data/todo-list.txt');
@@ -142,8 +140,6 @@ $nextPage = $currentPage < $maxPage ? $currentPage + 1 : null;
                 <ul class="nav navbar-nav">
                     <li><a href="#todo">My List</a>
                     </li>
-                    <li><a href="#services">Services</a>
-                    </li>
                     <li><a href="#contact">Contact</a>
                     </li>
                 </ul>
@@ -217,35 +213,15 @@ $nextPage = $currentPage < $maxPage ? $currentPage + 1 : null;
                     <? if (!empty($error_message)) : ?>
                         <div class="alert alert-danger"><?= "$error_message"; ?></div>                        
                     <? endif; ?>
-
-        <form method="POST" action="todo.php#todo">
-            <p>
-                <label for="item">Enter Item:</label>
-                <input id="item" name="item" type="text">
-            </p>
-            <p>
-                <button type="submit">Add to list</button>
-            </p>
-        </form> 
-
-        <? if ($invalid_file_type == TRUE) : ?>
-            <p><?= "An invalid file type was uploaded. Please try again"; ?></p>
-        <? endif; ?>
-
-        <h2>Upload File</h2>
-
-        <form method="POST" enctype="multipart/form-data" action="">
-            <p>
-                <label for="uploaded_file">File to add to list</label>
-                <input id="uploaded_file" name="uploaded_file" type="file">
-            </p>
-            <p>
-                <button type="submit">Upload:</button>
-                <input id="replace_file" name="replace_file" type="checkbox">
-                <label for="replace_file">Replace existing list</label>
-                
-            </p>
-        </form>
+            <form method="POST" action="todo.php#todo">
+                <p>
+                    <label for="item">Enter Item:</label>
+                    <input id="item" name="item" type="text">
+                </p>
+                <p>
+                    <button type="submit">Add to list</button>
+                </p>
+            </form> 
 
                 </div>
             </div>
@@ -264,16 +240,18 @@ $nextPage = $currentPage < $maxPage ? $currentPage + 1 : null;
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-6">
-                    <h2>Connect with the developer:</h2>
+                <div class="col-lg-5">
+                    <h2>Contact the developer:</h2>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-7">
                     <ul class="list-inline banner-social-buttons">
+                        <li><a href="mailto:orlandovillasenor@me.com" target="" class="btn btn-default btn-lg"><i class="fa fa-envelope fa-fw"></i> <span class="network-name">Email</span></a>
+                        </li>
                         <li><a href="https://twitter.com/ododoubleg" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
                         </li>
-                        <li><a href="https://github.com/orlandovillasenor" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-                        </li>
                         <li><a href="https://linkedin.com/in/orlandovillasenor" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                        </li>
+                        <li><a href="https://github.com/orlandovillasenor" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                         </li>
                     </ul>
                 </div>

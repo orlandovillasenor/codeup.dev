@@ -38,6 +38,7 @@ h1,h2,h3,h4,h5,h6{
 
 
 
+
 /* ==========================================================================
    Navigation
    ========================================================================== */
@@ -137,6 +138,36 @@ background-color: transparent;
    
 }
 
+#page-resume{
+    padding: 75px 0;
+    background:#282B30;
+    color: #fff;
+}
+
+#resume-download.btn {
+  color: #FFF;
+}
+
+.resume-well {
+  color: #000;
+  background-color: #f5f5f5;
+}
+
+
+
+
+
+.work-dates {
+  padding-top: 150px;
+}
+
+.ed-dates {
+  padding-top: 30px;
+}
+
+
+
+
 
 #page-skills{
     padding: 75px 0;
@@ -145,7 +176,7 @@ background-color: transparent;
     color: #fff;
 }
 
-#page-skills h2 {
+#page-resume h2 {
     color: #fff;
 }
 
@@ -174,6 +205,10 @@ background-color: transparent;
     padding: 75px 0;
     background:#f5f5f5;
 
+}
+
+.btn-portfolio {
+  margin-bottom: 40px;
 }
 
 #page-contact{
@@ -304,7 +339,7 @@ background-color: transparent;
    Vegas slider
    ========================================================================== */
 
-.vegas-loading {
+/*.vegas-loading {
     border-radius: 10px;
     background: #000;
     background: rgba(0,0,0,0.7);
@@ -327,8 +362,8 @@ background-color: transparent;
     -ms-interpolation-mode: bicubic;
     image-rendering: optimizeQuality;
     max-width: none !important; /* counteracts global img modification by twitter bootstrap library */
-    z-index: -2;
-}
+    /*z-index: -2;*/
+/*}
 
 .vegas-overlay,
 .vegas-background {
@@ -380,7 +415,7 @@ background-color: transparent;
     opacity: 0.3;
 }
 .next:hover, 
-.prev:hover{opacity: 1;}
+.prev:hover{opacity: 1;}*/
 
 /* ==========================================================================
    Dividers

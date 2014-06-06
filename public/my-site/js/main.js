@@ -92,23 +92,23 @@ $('.chart').waypoint(function() {
 
 /* VEGAS Home Slider */
 	
-		$.vegas('slideshow', {
-			  backgrounds:[
+		// $.vegas('slideshow', {
+		// 	  backgrounds:[
 				
-				// { src:'img/slider/17.jpg', fade:1000 },
-				{ src:'img/slider/gm.jpg', fade:1000 },
-				// { src:'img/slider/03.jpg', fade:1000 },
-				// { src:'img/slider/04.jpg', fade:1000 }
-			  ]
-			})('overlay', {
-			  src:'img/overlays/16.png'
-			});
-			$( "#vegas-next" ).click(function() {
-			  $.vegas('next');
-			});
-			$( "#vegas-prev" ).click(function() {
-			  $.vegas('previous');
-		});
+		// 		// { src:'img/slider/17.jpg', fade:1000 },
+		// 		{ src:'img/slider/gm.jpg', fade:1000 },
+		// 		// { src:'img/slider/03.jpg', fade:1000 },
+		// 		// { src:'img/slider/04.jpg', fade:1000 }
+		// 	  ]
+		// 	})('overlay', {
+		// 	  src:'img/overlays/16.png'
+		// 	});
+		// 	$( "#vegas-next" ).click(function() {
+		// 	  $.vegas('next');
+		// 	});
+		// 	$( "#vegas-prev" ).click(function() {
+		// 	  $.vegas('previous');
+		// });
 
 
 /*Contact form */
