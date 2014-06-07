@@ -1,8 +1,7 @@
 web1:
   name: codeupdev           
   shared_writable_dirs:
-    - /anderson-test/data
-  document_root: /public/
+    - public/anderson-test/data
   php_version: 5.4.14
   php_extensions:
   	- mcrypt
