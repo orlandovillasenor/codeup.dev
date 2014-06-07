@@ -1,0 +1,6 @@
+web1:
+  name: codeupdev           
+  shared_writable_dirs:
+    - anderson-test/data
+  document_root: public/
+  php_version: 5.4.14
