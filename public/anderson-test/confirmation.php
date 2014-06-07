@@ -13,7 +13,7 @@ class UserDataStore extends Filestore {
 $filename = "data/users.csv";
 $users = new UserDataStore($filename);
 $users_data = $users->read();
-$prospects = [];
+$prospects = array();
 
 if (isset($_POST['submit'])) {
  	
