@@ -58,7 +58,7 @@ class Filestore {
      */
     private function read_csv()
     {
-    	$contents = array();
+    	$contents = [];
 		$handle = fopen($this->filename, 'r');
 		while (($data = fgetcsv($handle)) !== FALSE) {
 			$contents[] = $data;
