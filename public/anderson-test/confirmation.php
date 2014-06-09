@@ -22,17 +22,17 @@ if (isset($_POST['submit'])) {
  	$email = $_POST['email'];
  	$company = $_POST['company'];
  	$phone = $_POST['phone'];
-	$to = "orlandovillasenor@me.com";
+	$to = 'orlandovillasenor@me.com';
 	$subject = "New Contact Info From Online Form";
-	$headers = "From: $email\n";
-	$message = "A prospect has sent the following contact info.\n
-	Full Name: $firstname\n
-	Last Name: $lastname\n
-	Email Address: $email\n
-	Company: $company\n
+	
+	$message = "A prospect has sent the following contact info.\r\n
+	Full Name: $firstname\r\n
+	Last Name: $lastname\r\n
+	Email Address: $email\r\n
+	Company: $company\r\n
 	Phone: $phone";
-	mail($to,$subject,$message,$headers);
-	mail("orlandovillasenor@me.com", "Contact Info Submitted", "Thank You For submitting your contact info for the purpose of downloading our 2013 Economic Development Report.", "From: orlandovillasenor@me.com");
+	mail($to, $subject, $message);
+	// mail("orlandovillasenor@me.com", "Contact Info Submitted", "Thank You For submitting your contact info for the purpose of downloading our 2013 Economic Development Report.", "From: orlandovillasenor@me.com");
 	$prospects = array($firstname, $lastname, $email, $company, $phone);
 	array_push($users_data, $prospects);
 	$users->write($users_data);
