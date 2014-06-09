@@ -26,13 +26,13 @@ if (isset($_POST['submit'])) {
 	$subject = "New Contact Info From Online Form";
 	
 	$message = "A prospect has sent the following contact info.\r\n
-	Full Name: $firstname\r\n
+	First Name: $firstname\r\n
 	Last Name: $lastname\r\n
 	Email Address: $email\r\n
 	Company: $company\r\n
 	Phone: $phone";
 	mail($to, $subject, $message);
-	// mail("orlandovillasenor@me.com", "Contact Info Submitted", "Thank You For submitting your contact info for the purpose of downloading our 2013 Economic Development Report.", "From: orlandovillasenor@me.com");
+	mail("everlongrecording@yahoo.com", "Contact Info Submitted", "Thank You For submitting your contact info", "From: orlandovillasenor@me.com");
 	$prospects = [$firstname, $lastname, $email, $company, $phone];
 	array_push($users_data, $prospects);
 	$users->write($users_data);
