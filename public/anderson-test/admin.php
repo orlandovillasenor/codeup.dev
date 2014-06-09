@@ -38,13 +38,13 @@ if (isset($_POST['download'])) {
         		<th>Phone #</th>
         	</thead>
         	<tbody>
-	            <? foreach ($users_data as $key => $rows) : ?>
+	            <?php foreach ($users_data as $key => $rows) : ?>
 	                <tr>
-	                    <? foreach ($rows as $row) : ?>
-	                        <td><?= htmlspecialchars(strip_tags($row)); ?></td>
-	                    <? endforeach; ?>
+	                    <?php foreach ($rows as $row) : ?>
+	                        <td><?php = htmlspecialchars(strip_tags($row)); ?></td>
+	                    <?php endforeach; ?>
 	                </tr>
-	             <? endforeach; ?>
+	             <?php endforeach; ?>
             </tbody>   
         </table>
         <h3>Download User List As .csv</h3>
