@@ -13,7 +13,7 @@ class UserDataStore extends Filestore {
 $filename = "data/users.csv";
 $users = new UserDataStore($filename);
 $users_data = $users->read();
-$prospects = array();
+$prospects = [];
 
 if (isset($_POST['submit'])) {
  	
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 	Phone: $phone";
 	mail($to, $subject, $message);
 	// mail("orlandovillasenor@me.com", "Contact Info Submitted", "Thank You For submitting your contact info for the purpose of downloading our 2013 Economic Development Report.", "From: orlandovillasenor@me.com");
-	$prospects = ['firstname' => $firstname, 'lastname' => $lastname, 'email' => $email, 'company' => $company, 'phone' => $phone];
+	$prospects = [$firstname, $lastname, $email, $company, $phone];
 	array_push($users_data, $prospects);
 	$users->write($users_data);
  }
