@@ -10,7 +10,7 @@ class UserDataStore extends Filestore {
     }
 }
 
-$filename = "/anderson-test/data/users.csv";
+$filename = "data/users.csv";
 $users = new UserDataStore($filename);
 $users_data = $users->read();
 
