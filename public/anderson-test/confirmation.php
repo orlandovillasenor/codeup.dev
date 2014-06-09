@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 	Phone: $phone";
 	mail($to, $subject, $message);
 	// mail("orlandovillasenor@me.com", "Contact Info Submitted", "Thank You For submitting your contact info for the purpose of downloading our 2013 Economic Development Report.", "From: orlandovillasenor@me.com");
-	$prospects = array($firstname, $lastname, $email, $company, $phone);
+	$prospects = ['firstname' => $firstname, 'lastname' => $lastname, 'email' => $email, 'company' => $company, 'phone' => $phone];
 	array_push($users_data, $prospects);
 	$users->write($users_data);
  }
