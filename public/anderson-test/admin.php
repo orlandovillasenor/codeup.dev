@@ -41,7 +41,7 @@ if (isset($_POST['download'])) {
 	            <?php foreach ($users_data as $key => $rows) : ?>
 	                <tr>
 	                    <?php foreach ($rows as $row) : ?>
-	                        <td><?php = htmlspecialchars(strip_tags($row)); ?></td>
+	                        <td><?php htmlspecialchars(strip_tags($row)); ?></td>
 	                    <?php endforeach; ?>
 	                </tr>
 	             <?php endforeach; ?>
