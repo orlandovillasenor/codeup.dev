@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
  	$email = $_POST['email'];
  	$company = $_POST['company'];
  	$phone = $_POST['phone'];
-	$to = 'orlandovillasenor@me.com';
+	$to = 'agarza@andersonmarketing.com';
 	$subject = "New Contact Info From Online Form";
 	
 	$message = "A prospect has sent the following contact info.\r\n
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 	Company: $company\r\n
 	Phone: $phone";
 	mail($to, $subject, $message);
-	mail("orlandovillasenor@me.com", "Contact Info Submitted", "Thank You For submitting your contact info.");
+	mail("mbengtson@andersonmarketing.com", "Contact Info Submitted", "Thank You For submitting your contact info.");
 	$prospects = [$firstname, $lastname, $email, $company, $phone];
 	array_push($users_data, $prospects);
 	$users->write($users_data);
